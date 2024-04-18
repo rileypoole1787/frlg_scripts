@@ -4,7 +4,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-er', '--encounter_rate', type=int, default=21, help='base encounter rate of area. Found in wild_encounters.json')
 parser.add_argument('-nbs', '--new_bush_tiles', type=int, nargs='*', default=[1], 
-    help='step numbers at which grass is entered. e.g for route 1, if no encounters are hit, new bushes are entered at steps  1, 6, 9, 13 and 17')
+    help='tiles at which a new patch grass is entered. e.g for route 1, if no encounters are hit, new bushes are entered at steps  1, 6, 9, 13 and 17')
 parser.add_argument('-sc', '--step_count', type=int, default=200, required=True,
     help='the number of steps to calculate percentages for')
 # TODO actually handle this case. Ignoring it should only have a minor effect
@@ -12,6 +12,9 @@ parser.add_argument('-est', '--extra_step_tiles', type=int, nargs='*', default=[
     help='tiles where an encounter requires you to take an extra step/turn-frame (e.g. the left-down turn in Viridian Forest)')
 parser.add_argument('-prt', '--protection-reset-tiles', type=int, nargs='*', default=[],
     help='tiles where protection should be reset. Useful if want to calculate chances for multiple passes of the same route (e.g. route one)')
+
+# command for calculating route one chances after two passes:
+# python .\frlg_encounter_count_chance.py -er 21 -sc 42 -nbs 1 6 9 13 17 22 27 30 34 38 -prt 22
 
 args = parser.parse_args()
 
