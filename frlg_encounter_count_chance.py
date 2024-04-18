@@ -13,7 +13,8 @@ parser.add_argument('-est', '--extra_step_tiles', type=int, nargs='*', default=[
 parser.add_argument('-prt', '--protection-reset-tiles', type=int, nargs='*', default=[],
     help='tiles where protection should be reset. Useful if want to calculate chances for multiple passes of the same route (e.g. route one)')
 
-# command for calculating route one chances after two passes:
+# command for calculating route one chances after two passes. Assumes you always go left out of
+# grass on second to last grass patch.
 # python .\frlg_encounter_count_chance.py -er 21 -sc 42 -nbs 1 6 9 13 17 22 27 30 34 38 -prt 22
 
 args = parser.parse_args()
@@ -174,7 +175,9 @@ def get_results(universes):
 
         cumulative_chance += universe.probability
     
-    print("Sanity check. Cumulative probability = {:.6f}".format(cumulative_chance))
+    # the below should be close to 1.0. Because of floating point errors accumulating
+    # it most likely won't be exactly 1.0
+    print("Sanity check. Cumulative probability = {}".format(cumulative_chance))
     return encounter_count_to_chance
 
 # start with one universe, new branches will be created at each step
